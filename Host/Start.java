@@ -1,5 +1,8 @@
+import javafx.application.Application;
+
 public class Start {
     public static void main(String[] args) {
-        Frame frame = new Frame();
+        String fname = "settings.config";
+        Config config = new Config(fname);
     }
 }
