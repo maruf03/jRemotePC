@@ -10,7 +10,7 @@ import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Host {
+public class Host extends Thread{
     private ServerSocket server = null;
     private Socket socket = null;
     private DataInputStream din = null;
@@ -19,11 +19,21 @@ public class Host {
     private Rectangle rectangle = null;
     private String width;
     private String height;
-    
+    private String pass;
+    private String user;
+
     public Host(int port, String user, String pass){
         try{
-            server = new ServerSocket(port);
-            
+            this.server = new ServerSocket(port);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+
+    @Override
+    public void run(){
+        try{
             GraphicsEnvironment Env = GraphicsEnvironment.getLocalGraphicsEnvironment();
             GraphicsDevice device = Env.getDefaultScreenDevice();
             Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -35,6 +45,7 @@ public class Host {
             this.robot = new Robot(device);
 
             while(true){
+                System.out.println("Server Running");
                 socket = server.accept();
                 din = new DataInputStream(socket.getInputStream());
                 dout = new DataOutputStream(socket.getOutputStream());
@@ -42,7 +53,7 @@ public class Host {
                 String username = din.readUTF();
                 String password = din.readUTF();
             
-                if(password.equals(pass) && username.equals(user)){
+                if(password.equals(this.pass) && username.equals(this.user)){
                     dout.writeUTF("success");
                     dout.writeUTF(this.width);
                     dout.writeUTF(this.height);
@@ -56,6 +67,19 @@ public class Host {
         }
         catch(Exception e){
             System.out.println(e);
+        }
+    }
+    public void stopHost(){
+        try{
+            System.out.println("Stopped Server Thread");
+            this.socket.close();
+            this.server.close();
+            this.din.close();
+            this.dout.close();
+            this.stop();
+        }
+        catch(Exception e){
+
         }
     }
 }

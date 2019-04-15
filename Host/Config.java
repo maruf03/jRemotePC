@@ -6,28 +6,23 @@ import java.util.Scanner;
 
 public class Config {
     private File file = null;
-    private String filePath;
     private FileInputStream fin = null;
     private FileOutputStream fout = null;
 
     private String userName = "";
     private String password = "";
 
-    public Config(String filePath){
-        this.filePath = filePath;
+    public Config(File file){
+        this.file = file;
+    }
+    public void getSettingsFromFile(){
         try{
-            this.file = new File(this.filePath);
-            if(this.file.exists()){
-                fin = new FileInputStream(this.file);
-                Scanner sc = new Scanner(fin);
-                this.userName = sc.next();
-                this.password = sc.next();
-                sc.close();
-                fin.close();
-            }
-            else{
-                this.file.createNewFile();
-            }
+            fin = new FileInputStream(this.file);
+            Scanner sc = new Scanner(fin);
+            this.userName = sc.next();
+            this.password = sc.next();
+            sc.close();
+            fin.close();
         }
         catch(IOException e){
             System.out.println(e);
@@ -52,7 +47,7 @@ public class Config {
     }
     public void saveSettings() throws IOException{
         try{
-            fout = new FileOutputStream(this.filePath);
+            fout = new FileOutputStream(this.file);
             String out = this.userName + " " + this.password;
             byte[] b = out.getBytes();
             fout.write(b);
