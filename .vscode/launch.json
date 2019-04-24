@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - MainMenu",
+            "request": "launch",
+            "mainClass": "MainMenu",
+            "projectName": "jRemotePC_19a8bc6d"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Frame",
+            "request": "launch",
+            "mainClass": "Frame",
+            "projectName": "jRemotePC_19a8bc6d"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - Start",
             "request": "launch",
             "mainClass": "Start",

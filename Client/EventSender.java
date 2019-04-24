@@ -1,4 +1,5 @@
-import javafx.event.ActionEvent;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 public interface EventSender {
     public void mouseMoved(MouseEvent event);

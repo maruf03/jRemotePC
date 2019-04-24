@@ -1,14 +1,15 @@
 import java.lang.Runnable;
 import java.net.Socket;
 import java.io.*;
+import javafx.scene.image.ImageView;
 
 public class Client implements Runnable{
-    private String hostAddress;
-    private int hostPort;
+    private Socket socket = null;
+    private ImageView image = null;
 
-    Client(String address, int port){
-        this.hostAddress = address;
-        this.hostPort = port;
+    Client(Socket socket, ImageView image){
+        this.socket = socket;
+        
     }
 
     @Override
