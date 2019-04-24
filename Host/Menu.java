@@ -23,9 +23,11 @@ public class Menu extends Application {
 
     private Label labelUserName = null;
     private Label labelPassword = null;
+    private Label labelPort = null;
 
     private TextField userField = null;
     private PasswordField passwordField = null;
+    private TextField portField = null;
 
     private Button saveButton = null;
     private Button startButton = null;
@@ -35,16 +37,19 @@ public class Menu extends Application {
     private Scene mainScene = null;
 
     private Host host = null;
+    private int port = 6000; //Default port is 6000
 
     @Override
     public void start(Stage primaryStage) {
         this.file = new File("settings.config");
         this.labelUserName = new Label("Username:");
         this.labelPassword = new Label("Password:");
+        this.labelPort = new Label("Port:");
         this.userField = new TextField();
         this.passwordField = new PasswordField();
-        //this.passwordField.setText();
-        this.vbox = new VBox(this.labelUserName, this.userField, this.labelPassword, this.passwordField);
+        this.portField = new TextField();
+        
+        this.vbox = new VBox(this.labelUserName, this.userField, this.labelPassword, this.passwordField, this.labelPort, this.portField);
         this.saveButton = new Button("Save");
         this.saveButton.setOnAction(this::onSaveButton);
         this.startButton = new Button("Start");
@@ -58,7 +63,7 @@ public class Menu extends Application {
         this.hbox.setSpacing(15);
         this.vbox.getChildren().add(this.hbox);
         this.vbox.setSpacing(5);
-        this.mainScene = new Scene(this.vbox, 200, 150);
+        this.mainScene = new Scene(this.vbox, 200, 200);
         primaryStage.setScene(this.mainScene);
         primaryStage.setTitle("Start Host");
         primaryStage.setResizable(false);
@@ -89,7 +94,8 @@ public class Menu extends Application {
     private void onStartButton(ActionEvent event){
         try{
             if(this.userField.getText().length() != 0 && this.passwordField.getText().length() != 0){
-                this.host = new Host(6000, this.userField.getText(), this.passwordField.getText());
+                this.port = Integer.parseInt(this.portField.getText());
+                this.host = new Host(this.port, this.userField.getText(), this.passwordField.getText());
                 this.host.start();
                 this.startButton.setDisable(true);
                 this.stopButton.setDisable(false);

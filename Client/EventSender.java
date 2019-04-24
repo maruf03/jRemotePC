@@ -1,16 +1,9 @@
-import java.lang.Runnable;
-import java.net.Socket;
-import java.io.*;
+import javafx.event.ActionEvent;
 
-public class EventSender {
-    private Socket socket = null;
-    public EventSender(Socket socket){
-        this.socket = socket;
-    }
-    public void sendMouseEvent(int x, int y){
-
-    }
-    public void sendKeypressEvent(){
-        
-    }
+public interface EventSender {
+    public void mouseMoved(MouseEvent event);
+    public void mousePressed(MouseEvent event);
+    public void mouseReleased(MouseEvent event);
+    public void keyPressed(KeyEvent event);
+    public void keyReleased(KeyEvent event);
 }
