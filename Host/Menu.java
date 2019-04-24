@@ -36,6 +36,7 @@ public class Menu extends Application {
 
     private Scene mainScene = null;
 
+    private EventManager eventManager = null;
     private Host host = null;
     private int port = 6000; //Default port is 6000
 
@@ -97,6 +98,7 @@ public class Menu extends Application {
                 this.port = Integer.parseInt(this.portField.getText());
                 this.host = new Host(this.port, this.userField.getText(), this.passwordField.getText());
                 this.host.start();
+                this.eventManager = new EventManager(socket)
                 this.startButton.setDisable(true);
                 this.stopButton.setDisable(false);
             }

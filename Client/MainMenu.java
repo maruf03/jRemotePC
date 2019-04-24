@@ -8,6 +8,8 @@ import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.Scene;
@@ -22,10 +24,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
+import CommandList;
 
 public class MainMenu extends Application implements EventSender{
     private Scene mainScene = null;
@@ -164,19 +168,42 @@ public class MainMenu extends Application implements EventSender{
         }
     }
     public void mouseMoved(MouseEvent event){
-        System.out.println(event.getSceneX() + ", " + event.getSceneY());
+        Rectangle2D screen = Screen.getPrimary().getVisualBounds();
+        double sceneWidth = screen.getWidth();
+        double sceneHeight = screen.getHeight();
+        double x = event.getSceneX()/sceneWidth;
+        double y = event.getSceneY()/sceneHeight;
+        dout.writeInt(CommandList.MOUSEMOVED);
+        dout.writeDouble(x);
+        dout.writeDouble(y);
+        dout.flush();
+        System.out.println("Done");
     }
     public void mousePressed(MouseEvent event){
-        System.out.println("Mouse Pressed at: " + event.getSceneX() + ", " + event.getSceneY());
+        dout.writeInt(CommandList.MOUSEPRESSED);
+        int button = event.getButton();
+        dout.writeDouble(button);
+        dout.flush();
+        System.out.println("Done");
     }
     public void mouseReleased(MouseEvent event){
-        System.out.println("Mouse Released at: " + event.getSceneX() + ", " + event.getSceneY());
+        dout.writeInt(CommandList.MOUSERELEASED);
+        int button = event.getButton();
+        dout.writeDouble(button);
+        dout.flush();
+        System.out.println("Done");
     }
     public void keyPressed(KeyEvent event){
-        System.out.println("Key Pressed: " + event.getText());
+        dout.writeInt(CommandList.KEYPRESSED);
+        dout.writeInt(event.getCode().ordinal());
+        dout.flush();
+        System.out.println("Done");
     }
     public void keyReleased(KeyEvent event){
-        System.out.println("Key Released: " + event.getText());
+        dout.writeInt(CommandList.KEYRELEASED);
+        dout.writeInt(event.getCode().ordinal());
+        dout.flush();
+        System.out.println("Done");
     }
     public static void main(String[] args) {
         launch(args);
