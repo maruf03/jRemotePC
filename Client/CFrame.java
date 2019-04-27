@@ -12,6 +12,7 @@ import java.io.IOException;
 
 class CFrame extends Thread {
 	String width="", height="";
+	Socket cSocket = null;
 	private JFrame frame = new JFrame();
 
 	

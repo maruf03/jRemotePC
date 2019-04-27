@@ -4,7 +4,7 @@ import java.net.Socket;
 import java.lang.Thread;
 import java.net.UnknownHostException;
 
-public class Server extends Thread{
+public class Client extends Thread{
 	Socket socket = null;
 	DataInputStream inputStream = null;
     DataOutputStream outputStream = null;
@@ -18,7 +18,7 @@ public class Server extends Thread{
     String ip;
     int port;
 			
-	Client(int port, String ip, String username, String password){
+	public Client(int port, String ip, String username, String password){
         this.port = port;
         this.ip = ip;
         this.username = username;
@@ -43,7 +43,7 @@ public class Server extends Thread{
         }
         if(verify.equals("valid")){
             try {
-                this.width = inpuStream.readUTF();
+                this.width = inputStream.readUTF();
                 this.height = inputStream.readUTF();
                 CFrame frame = new CFrame(this.socket, this.width, this.height);
             } catch (Exception e) {
