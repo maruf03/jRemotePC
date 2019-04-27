@@ -6,19 +6,19 @@ import java.io.OutputStream;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.lang.Thread;
+import java.lang.Runnable;
 
-public class ShareScreen extends Thread {
+public class ShareScreen implements Runnable {
     private Socket socket = null;
     private Robot robot = null;
     private Rectangle rectangle = null;
 
     OutputStream out = null;
 
-    public ShareScreen(Socket socket, Robot robot, Rectangle rectangle) {
+    public ShareScreen() {
         this.socket = socket;
         this.robot = robot;
         this.rectangle = rectangle;
-        this.start();
     }
 
     @Override

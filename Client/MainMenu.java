@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 
 import javafx.application.Application;
@@ -120,6 +121,7 @@ public class MainMenu extends Application implements EventSender{
                     this.dout.writeUTF(this.password);
 
                     String response = this.din.readUTF();
+                    this.socket.close();
                     if(response.equals("success")){
                         this.width = Integer.parseInt(this.din.readUTF());
                         this.height = Integer.parseInt(this.din.readUTF());
@@ -128,18 +130,6 @@ public class MainMenu extends Application implements EventSender{
                         prevstage.close();
 
                         this.image = new ImageView();
-                        Platform.runLater(new Runnable() {
-                            @Override 
-                            public void run() {
-                                BufferedImage bimg = null;
-                                Image img = null;
-                                while(true){
-                                    bimg = ImageIO.read(this.socket.getInputStream());
-                                    img = SwingFXUtils.toFXImage(bimg, null);   
-                                    this.image.setImage(img);
-                                }   
-                            }
-                        });
                         this.image.setOnKeyPressed(this::keyPressed);
                         this.image.setOnKeyReleased(this::keyReleased);
                         this.image.setOnMousePressed(this::mousePressed);
@@ -152,6 +142,22 @@ public class MainMenu extends Application implements EventSender{
                         secondStage.setScene(this.mainScene);
                         secondStage.setTitle("Remote Desktop");
                         secondStage.show();
+                        Platform.runLater(new Runnable() {
+                            @Override 
+                            public void run() {
+                                BufferedImage bimg = null;
+                                Image img = null;
+                                ObjectInputStream in = null;
+                                while(true){
+                                    this.socket = new Socket(this.ip, this.port);
+                                    in = new ObjectInputStream(this.socket.getInputStream());
+                                    bimg = ImageIO.read(in);
+                                    img = SwingFXUtils.toFXImage(bimg, null);   
+                                    this.image.setImage(img);
+                                    this.socket.close();
+                                }   
+                            }
+                        });
                     }
                     else{
                         //Show Invalid login info

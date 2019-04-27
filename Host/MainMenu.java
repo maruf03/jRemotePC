@@ -1,7 +1,11 @@
 import java.io.File;
 import java.io.IOException;
-
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.awt.Robot;
+import java.awt.Rectangle;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -14,7 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Menu extends Application {
+public class MainMenu extends Application {
     private Config config = null;
     private File file = null;
 
@@ -36,9 +40,12 @@ public class Menu extends Application {
 
     private Scene mainScene = null;
 
-    private EventManager eventManager = null;
-    private Host host = null;
+    //private EventManager eventManager = null;
+    private ServerSocket server = null;
     private int port = 6000; //Default port is 6000
+    private Socket socket = null;
+    private Robot robot = null;
+    private Rectangle rectangle = null;
 
     @Override
     public void start(Stage primaryStage) {
@@ -96,9 +103,22 @@ public class Menu extends Application {
         try{
             if(this.userField.getText().length() != 0 && this.passwordField.getText().length() != 0){
                 this.port = Integer.parseInt(this.portField.getText());
-                this.host = new Host(this.port, this.userField.getText(), this.passwordField.getText());
-                this.host.start();
-                this.eventManager = new EventManager(socket)
+                this.server = new ServerSocket(this.port);
+                Platform.runLater(new Runnable(){
+                
+                    @Override
+                    public void run() {
+                        while (true) {
+                            Socket sc = null;
+                            try {
+                                sc = server.accept();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }   
+                            
+                        }
+                    }
+                });
                 this.startButton.setDisable(true);
                 this.stopButton.setDisable(false);
             }
@@ -135,7 +155,6 @@ public class Menu extends Application {
     }
     private void onStopButton(ActionEvent event){
         try{
-            this.host.stopHost();
             this.startButton.setDisable(false);
             this.stopButton.setDisable(true);
         }
