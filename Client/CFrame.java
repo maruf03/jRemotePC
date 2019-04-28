@@ -33,7 +33,10 @@ class CFrame extends Thread {
 
 		//Show thr frame in maximized state
 	
-		frame.setExtendedState(frame.getExtendedState()|JFrame.MAXIMIZED_BOTH);		//CHECK THIS LINE
+		//frame.setExtendedState(frame.getExtendedState()|JFrame.MAXIMIZED_BOTH);		//CHECK THIS LINE
+		double w = Double.valueOf(width.trim()).doubleValue();
+		double h = Double.valueOf(width.trim()).doubleValue();
+		frame.resize((int)w/2, (int)h/2);
 		frame.add(cPanel);
 		cPanel.setFocusable(true);
 		cPanel.requestFocusInWindow();
@@ -51,7 +54,6 @@ class CFrame extends Thread {
 			}catch (IOException e){
 			e.printStackTrace();
 		}
-
 		//Start receiving screenshots
 		new ReceiveScreen(in,cPanel);
 		//Start sending events to the client
