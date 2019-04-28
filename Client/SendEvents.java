@@ -43,11 +43,11 @@ class SendEvents implements KeyListener, MouseMotionListener, MouseListener{
 	}
 
 	public void mouseMoved(MouseEvent e){
-		double xScale = (double)e.getX()/cPanel.getWidth();
-		double yScale = (double)e.getY()/cPanel.getHeight();
+		double xScale = (double)w/cPanel.getWidth();
+		double yScale = (double)h/cPanel.getHeight();
 		writer.println(Commands.MOVE_MOUSE.getAbbrev());
-		writer.println((int)xScale);
-		writer.println((int)yScale);
+		writer.println((int)(e.getX()*xScale));
+		writer.println((int)(e.getY()*yScale));
 		writer.flush();
 	}
 

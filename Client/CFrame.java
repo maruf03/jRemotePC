@@ -34,12 +34,10 @@ class CFrame extends Thread {
 		//Show thr frame in maximized state
 	
 		frame.setExtendedState(frame.getExtendedState()|JFrame.MAXIMIZED_BOTH);		//CHECK THIS LINE
-		frame.add(cPanel);
-		cPanel.setFocusable(true);
-		cPanel.requestFocusInWindow();
-		frame.pack();
 		frame.setVisible(true);
-        		
+		frame.add(cPanel);
+        cPanel.setFocusable(true);
+		cPanel.requestFocusInWindow();
 	}
 
 	public void run() { 
