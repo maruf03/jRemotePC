@@ -42,8 +42,8 @@ class ReceiveEvents extends Thread{
 					robot.keyRelease(scanner.nextInt());
 					break;
 					case-5:
-					double x = this.width*scanner.nextDouble();
-					double y = this.height*scanner.nextDouble();
+					double x = this.width*scanner.nextInt();
+					double y = this.height*scanner.nextInt();
 					robot.mouseMove((int)x, (int)y);
 					break;
 				}
