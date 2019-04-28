@@ -34,22 +34,22 @@ class CFrame extends Thread {
 		//Show thr frame in maximized state
 	
 		frame.setExtendedState(frame.getExtendedState()|JFrame.MAXIMIZED_BOTH);		//CHECK THIS LINE
+		frame.add(cPanel);
+		cPanel.setFocusable(true);
+		cPanel.requestFocusInWindow();
+		frame.pack();
 		frame.setVisible(true);
-        frame.add(cPanel);
-        frame.pack();
-        cPanel.setFocusable(true);		
+        		
 	}
 
 	public void run() { 
-		//Used to read screenshots
 		InputStream in = null;
-		//start drawing GUI
 		drawGUI();
 
 		try{
 			in = cSocket.getInputStream();
-			}catch (IOException ex){
-			ex.printStackTrace();
+			}catch (IOException e){
+			e.printStackTrace();
 		}
 
 		//Start receiving screenshots
