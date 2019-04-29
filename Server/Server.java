@@ -12,32 +12,30 @@ import java.net.Socket;
 
 public class Server{
 		
-	ServerSocket socket = null;
-	DataInputStream inputStream = null;
-	DataOutputStream outputStream = null;
-	String width="";
-	String height="";
+	private ServerSocket server = null;
+	private DataInputStream inputStream = null;
+	private DataOutputStream outputStream = null;
 			
 	Server(int port,String username, String password){
 		Robot robot = null;
 		Rectangle rectangle = null;
 		try{
-			System.out.println("Awaiting Connection from Client");
-			socket=new ServerSocket(port);
+			System.out.println("Waiting for Connection:");
+			server = new ServerSocket(port);
 			
 			GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice gDev = gEnv.getDefaultScreenDevice();
 	
 			Dimension dim=Toolkit.getDefaultToolkit().getScreenSize();
-			String width=""+dim.getWidth();
-			String height=""+dim.getHeight();
-			rectangle=new Rectangle(dim);
-			robot=new Robot(gDev);
+			String width = "" + dim.getWidth();
+			String height = "" + dim.getHeight();
+			rectangle = new Rectangle(dim);
+			robot = new Robot(gDev);
 
 			while(true){
-				Socket sc=socket.accept();
-				inputStream = new DataInputStream(sc.getInputStream());
-				outputStream = new DataOutputStream(sc.getOutputStream());
+				Socket socket= server.accept();
+				inputStream = new DataInputStream(socket.getInputStream());
+				outputStream = new DataOutputStream(socket.getOutputStream());
 				String user = inputStream.readUTF();
 				String pass = inputStream.readUTF();
 				
@@ -45,14 +43,14 @@ public class Server{
 					outputStream.writeUTF("valid");
 					outputStream.writeUTF(width);
 					outputStream.writeUTF(height);
-					new SendScreen(sc,robot,rectangle);
-					new ReceiveEvents(sc,robot);}
+					new SendScreen(socket,robot,rectangle);
+					new ReceiveEvents(socket,robot);}
 				else{
 					outputStream.writeUTF("invalid");
 				}
 			}
-		}catch (Exception ex){
-			ex.printStackTrace();
+		}catch (Exception e){
+			e.printStackTrace();
 		}
 	}
 }

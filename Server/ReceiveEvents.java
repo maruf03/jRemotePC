@@ -2,11 +2,12 @@ import java.awt.Robot;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
+import java.awt.Toolkit;
+import java.awt.Dimension;
 
 class ReceiveEvents extends Thread{
-	Socket socket= null;
-	Robot robot = null;
-	boolean continueLoop = true;
+	private Socket socket= null;
+	private Robot robot = null;
 
 	public ReceiveEvents(Socket socket, Robot robot){
 		this.socket = socket;
@@ -19,7 +20,7 @@ class ReceiveEvents extends Thread{
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(socket.getInputStream());
-			while(continueLoop){
+			while(true){
 				int command = scanner.nextInt();
 				switch(command){
 					case-1:
@@ -35,13 +36,13 @@ class ReceiveEvents extends Thread{
 					robot.keyRelease(scanner.nextInt());
 					break;
 					case-5:
-					robot.mouseMove(scanner.nextInt(),scanner.nextInt());
+					robot.mouseMove(scanner.nextInt(), scanner.nextInt());
 					break;
 				}
 			}
 		}
-		catch(IOException ex){
-			ex.printStackTrace();
+		catch(IOException e){
+			e.printStackTrace();
 		}
 	}			
 }
