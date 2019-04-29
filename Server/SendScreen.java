@@ -9,44 +9,40 @@ import javax.imageio.ImageIO;
 
 class SendScreen extends Thread{
 
-	Socket socket=null;
-	Robot robot=null;
-	Rectangle rectangle=null;
-	boolean continueLoop=true;
+	private Socket socket = null;
+	private Robot robot = null;
+	private Rectangle rectangle = null;
 	
-	OutputStream oos=null;
+	private OutputStream out = null;
 
 	public SendScreen(Socket socket,Robot robot,Rectangle rect) {
-	this.socket=socket;
-	this.robot=robot;
-	rectangle=rect;
-	start();
+		this.socket=socket;
+		this.robot=robot;
+		rectangle=rect;
+		start();
 	}
 
 	public void run(){
-	
 		try{
-	oos=socket.getOutputStream();
-	
-	}catch(IOException ex){
-		ex.printStackTrace();
-	}
+			oos=socket.getOutputStream();
+		}catch(IOException ex){
+			ex.printStackTrace();
+		}
+		while(true){
+			BufferedImage image=robot.createScreenCapture(rectangle);
 
-	while(continueLoop){
-	BufferedImage image=robot.createScreenCapture(rectangle);
-
-	try{
-		ImageIO.write(image,"jpeg",oos);
-	}catch(IOException ex){
-		ex.printStackTrace();
-	}
-	
-	try{
-		Thread.sleep(10);
-	}catch(InterruptedException e){
-		e.printStackTrace();
-	}
-	}
+			try{
+				ImageIO.write(image,"jpeg",out);
+			}catch(IOException ex){
+				ex.printStackTrace();
+			}
+			
+			try{
+				Thread.sleep(10);
+			}catch(InterruptedException e){
+				e.printStackTrace();
+			}
+		}
 	}
 }
 

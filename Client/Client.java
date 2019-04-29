@@ -5,18 +5,18 @@ import java.lang.Thread;
 import java.net.UnknownHostException;
 
 public class Client extends Thread{
-	Socket socket = null;
-	DataInputStream inputStream = null;
-    DataOutputStream outputStream = null;
+	private Socket socket = null;
+	private DataInputStream inputStream = null;
+    private DataOutputStream outputStream = null;
 
-    String verify = "";
-	String width="";
-    String height="";
+    private String verify = "";
+	private String width="";
+    private String height="";
     
-    String username;
-    String password;
-    String ip;
-    int port;
+    private String username;
+    private String password;
+    private String ip;
+    private int port;
 			
 	public Client(int port, String ip, String username, String password){
         this.port = port;
