@@ -4,7 +4,9 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.awt.Toolkit;
 import java.awt.Dimension;
-
+/**
+ * ReceiveEvents creates a new Thread and receive the events sent from client and dispatch it accordingly
+ */
 class ReceiveEvents extends Thread{
 	private Socket socket= null;
 	private Robot robot = null;

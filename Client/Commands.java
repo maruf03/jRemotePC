@@ -1,3 +1,6 @@
+/**
+ * Event types
+ */
 public class Commands{
 	public static int PRESS_MOUSE = -1;
 	public static int RELEASE_MOUSE = -2;

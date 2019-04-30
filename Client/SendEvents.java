@@ -8,6 +8,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import javax.swing.JPanel;
 
+/**
+ * SendEvent implements AWT Event listeners and captures all event occurred in the JPanel of CFrame and sends 
+ * the event data to the server
+ */
 
 class SendEvents implements KeyListener, MouseMotionListener, MouseListener{
 	private Socket socket = null;
@@ -33,10 +37,10 @@ class SendEvents implements KeyListener, MouseMotionListener, MouseListener{
 		Panel.addMouseMotionListener(this);
 
 		try{
-			//Prepare PrintWriter which will be used to send commands to the client
+			//Prepare PrintWriter which will be used to send events to the client
 			writer = new PrintWriter(socket.getOutputStream());
 		} catch(IOException e) {
-				e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
@@ -44,6 +48,7 @@ class SendEvents implements KeyListener, MouseMotionListener, MouseListener{
 	}
 
 	public void mouseMoved(MouseEvent e){
+		//Scaling factor of the events on client side to map to server side screen
 		double xScale = (double)w/cPanel.getWidth();
 		double yScale = (double)h/cPanel.getHeight();
 		writer.println(Commands.MOVE_MOUSE);

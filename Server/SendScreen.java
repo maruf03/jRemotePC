@@ -6,7 +6,9 @@ import java.io.OutputStream;
 import java.net.Socket;
 import javax.imageio.ImageIO;
 
-
+/**
+ * SendScreen creates a new Thread and sends the screenshot in every 10 milliseconds to the client
+ */
 class SendScreen extends Thread{
 
 	private Socket socket = null;
@@ -29,9 +31,11 @@ class SendScreen extends Thread{
 			ex.printStackTrace();
 		}
 		while(true){
+			//Taking the screen shot of the host machine
 			BufferedImage image=robot.createScreenCapture(rectangle);
 
 			try{
+				//Sending the screenshot image to socket output stream
 				ImageIO.write(image,"jpeg",out);
 			}catch(IOException ex){
 				ex.printStackTrace();

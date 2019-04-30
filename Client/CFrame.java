@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.io.IOException;
 
+/**
+ * This class Receives screen captures from Server and shows in JPanel and generates Mouse and Keyboard events  
+ */
 class CFrame extends Thread {
 	private String width="";
 	private String height="";
@@ -34,7 +37,7 @@ class CFrame extends Thread {
         Panel.setFocusable(true);
 		Panel.requestFocusInWindow();
 	}
-
+	//Updates the screen and receives screenshots and sending Events to server
 	@Override
 	public void run() { 
 		InputStream in = null;
