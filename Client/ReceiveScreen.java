@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
+/**
+ * ReceiveScreen creates a new Thread and updates the JPanel class of CFrame when it receives a ScreenShot 
+ */
 class ReceiveScreen extends Thread{
 	private JPanel Panel = null;
 	private InputStream input = null;

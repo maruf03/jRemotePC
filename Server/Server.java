@@ -10,6 +10,9 @@ import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Server opens a ServerSocket and authenticates a client then manages SendScreen and ReceiveEvents thread
+*/
 public class Server{
 		
 	private ServerSocket server = null;
@@ -43,8 +46,11 @@ public class Server{
 					outputStream.writeUTF("valid");
 					outputStream.writeUTF(width);
 					outputStream.writeUTF(height);
+					//Sends screebshots to the client socket
 					new SendScreen(socket,robot,rectangle);
-					new ReceiveEvents(socket,robot);}
+					//Receives events from client socket and disoatch events
+					new ReceiveEvents(socket,robot);
+				}
 				else{
 					outputStream.writeUTF("invalid");
 				}

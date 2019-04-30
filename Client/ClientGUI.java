@@ -10,7 +10,10 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.geometry.Pos;
-
+/**
+ * ClientGUI handles login credentials to connect with the server
+ * This is the entry point of the client side
+ */
 public class ClientGUI extends Application{
     private HBox hbox = null;
     private VBox vbox = null;
